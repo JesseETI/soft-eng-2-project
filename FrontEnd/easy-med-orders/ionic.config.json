@@ -1,0 +1,7 @@
+{
+  "name": "Easy Med orders",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
