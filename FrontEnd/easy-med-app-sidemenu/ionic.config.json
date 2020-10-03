@@ -1,0 +1,7 @@
+{
+  "name": "easy med app sidemenu",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
