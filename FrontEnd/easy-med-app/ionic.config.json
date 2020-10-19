@@ -1,0 +1,7 @@
+{
+  "name": "easy med app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
