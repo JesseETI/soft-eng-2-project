@@ -31,6 +31,7 @@ export class AuthService {
           let decoded = helper.decodeToken(token);
           console.log('decoded: ',decoded);
           this.userData.next(decoded);
+          return true;
         }else{
           return null;
         }
@@ -39,7 +40,7 @@ export class AuthService {
   }
 
   login(credentials:{email:string,pw:string}): Observable<any>{
-    //TODO: Add send to server part here
+    // TODO: Add send to server part here
     if (credentials.email !="root"|| credentials.pw !="toor"){
       return of(null);
     }
