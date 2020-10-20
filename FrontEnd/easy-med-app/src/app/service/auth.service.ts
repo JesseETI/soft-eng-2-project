@@ -8,6 +8,7 @@ import { BehaviorSubject, from, Observable, of } from 'rxjs';
 import {take,map,switchMap} from 'rxjs/operators';
 const helper = new JwtHelperService();
 const TOKEN_KEY = 'jwt-token';
+const SERVER_URL = 'https://'
 @Injectable({
   providedIn: 'root'
 })
@@ -42,13 +43,11 @@ export class AuthService {
 
   login(credentials:{email:string,pw:string}): Observable<any>{
     // TODO: Add send to server part here
-    if (credentials.email !="root"|| credentials.pw !="toor"){
-      return of(null);
-    }
-    return this.http.get('https://randomuser.me/api/').pipe(
+    
+    return this.http.post(SERVER_URL,credentials).pipe(
       take(1),
-      map((res) => {
-        return 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImp0aSI6IjU1M2IyZmJmLTFmYzItNDZhZS1iMjc1LWZmNjNiODVjYTFjMyIsImlhdCI6MTYwMzEzNjQxNCwiZXhwIjoxNjAzMTQwMDE0fQ.ZVxhFc0CB-NVspQmb__vUAqWSQXuaxtiY7DHM_isEw4'
+      map((res:any) => {
+        return res.token
       }),
       switchMap(token =>{
         let decoded = helper.decodeToken(token);
