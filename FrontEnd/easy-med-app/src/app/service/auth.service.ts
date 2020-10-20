@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Platform } from '@ionic/angular';
+import {Storage} from '@ionic/storage';
 import { BehaviorSubject, from, Observable, of } from 'rxjs';
 import {take,map,switchMap} from 'rxjs/operators';
 const helper = new JwtHelperService();
@@ -70,7 +71,7 @@ export class AuthService {
       this.router.navigateByUrl('/');
       this.userData.next(null);
 
-    })
+    });
 
   }
   

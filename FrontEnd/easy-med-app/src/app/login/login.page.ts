@@ -1,7 +1,8 @@
+import { AuthService } from './../service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { AuthService } from '../service/auth.service';
+
 
 @Component({
   selector: 'app-login',
