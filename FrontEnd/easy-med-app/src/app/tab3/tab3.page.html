@@ -12,6 +12,19 @@
       <ion-title size="large">Tab 3</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-list>
+    <ion-item button routerLink="general">
+      <ion-label>
+        <ion-text >General</ion-text>
+      </ion-label>
+    </ion-item>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+    
+    <ion-item button (click)="logout()">
+      <ion-label>
+        <ion-text color="danger">Log out</ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
 </ion-content>
