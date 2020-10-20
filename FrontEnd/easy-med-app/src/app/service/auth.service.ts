@@ -4,11 +4,14 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Platform } from '@ionic/angular';
 import {Storage} from '@ionic/storage';
-import { BehaviorSubject, from, Observable, of } from 'rxjs';
-import {take,map,switchMap} from 'rxjs/operators';
+import { BehaviorSubject, from, Observable, of, throwError } from 'rxjs';
+import {take,map,switchMap, catchError} from 'rxjs/operators';
 const helper = new JwtHelperService();
 const TOKEN_KEY = 'jwt-token';
-const SERVER_URL = 'https://'
+const SERVER_URL = 'https://reqres.in/api/login'
+// DELETEME: A test JWT
+const TEST_JWT_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImp0aSI6IjU1M2IyZmJmLTFmYzItNDZhZS1iMjc1LWZmNjNiODVjYTFjMyIsImlhdCI6MTYwMzEzNjQxNCwiZXhwIjoxNjAzMTQwMDE0fQ.ZVxhFc0CB-NVspQmb__vUAqWSQXuaxtiY7DHM_isEw4";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,21 +44,32 @@ export class AuthService {
     );
   }
 
-  login(credentials:{email:string,pw:string}): Observable<any>{
+  login(credentials:{email:string,password:string}): Observable<any>{
     // TODO: Add send to server part here
     
     return this.http.post(SERVER_URL,credentials).pipe(
       take(1),
+      catchError((err) =>{
+        console.log("Server Error..");
+        return of(null);
+      }),
+      
       map((res:any) => {
-        return res.token
+        if (res) return res.token;
+        return TEST_JWT_KEY; //DELETEME: replace this with return res;
       }),
       switchMap(token =>{
+        if (token === null) return token;
         let decoded = helper.decodeToken(token);
         console.log('login decoded: ' + decoded);
         this.userData.next(decoded);
 
         let storageObs = from(this.storage.set(TOKEN_KEY,token));
         return storageObs;
+      }),
+      catchError(err => {
+        console.log("JWT token error..");
+        return of(null);
       })
 
     );
