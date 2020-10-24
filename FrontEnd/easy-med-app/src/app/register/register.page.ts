@@ -15,6 +15,7 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
 
   }
+  // TODO: Add validation
   register(formData:any) {
     console.log(formData.value);
     this.auth.register(formData.value).subscribe(async res =>{

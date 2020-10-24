@@ -17,7 +17,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
   }
-
+  // TODO: Add validation
   login() {
     this.auth.login(this.credentials).subscribe(async res => {
       if (res) {

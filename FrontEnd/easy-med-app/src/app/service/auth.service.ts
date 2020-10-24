@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   login(credentials:{email:string,password:string}): Observable<any>{
-    // TODO: Add send to server part here
+    
     
     return this.http.post(LOGIN_URL,credentials).pipe(
       take(1),
