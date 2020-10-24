@@ -48,8 +48,7 @@ export class AuthService {
 
   login(credentials:{email:string,password:string}): Observable<any>{
     // TODO: Add send to server part here
-    //DELETEME: the next line
-    if (credentials.email !== "root" || credentials.password !== "toor") return of(null);
+    
     return this.http.post(LOGIN_URL,credentials).pipe(
       take(1),
       catchError((err) =>{
@@ -58,11 +57,11 @@ export class AuthService {
       }),
       
       map((res:any) => {
-        if (res) return res.token;
-        return TEST_JWT_KEY; //DELETEME: replace this with return res;
+        if (res) return TEST_JWT_KEY;
+        return res; //DELETEME: replace this with return res;
       }),
       switchMap(token =>{
-        if (token === null) return token;
+        if (token === null) return of(null);
         let decoded = helper.decodeToken(token);
         console.log('login decoded: ' + decoded);
         this.userData.next(decoded);
@@ -70,10 +69,7 @@ export class AuthService {
         let storageObs = from(this.storage.set(TOKEN_KEY,token));
         return storageObs;
       }),
-      catchError(err => {
-        console.log("JWT token error..");
-        return of(null);
-      })
+      
 
     );
   
