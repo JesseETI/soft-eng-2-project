@@ -46,7 +46,8 @@ export class AuthService {
 
   login(credentials:{email:string,password:string}): Observable<any>{
     // TODO: Add send to server part here
-    
+    //DELETEME: the next line
+    if (credentials.email !== "root" || credentials.password !== "toor") return of(null);
     return this.http.post(SERVER_URL,credentials).pipe(
       take(1),
       catchError((err) =>{
