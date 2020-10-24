@@ -1,14 +1,16 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Platform } from '@ionic/angular';
 import {Storage} from '@ionic/storage';
-import { BehaviorSubject, from, Observable, of, throwError } from 'rxjs';
-import {take,map,switchMap, catchError} from 'rxjs/operators';
+import { BehaviorSubject, from, Observable, of} from 'rxjs';
+import {take,map,switchMap, catchError, tap} from 'rxjs/operators';
 const helper = new JwtHelperService();
 const TOKEN_KEY = 'jwt-token';
-const SERVER_URL = 'https://reqres.in/api/login'
+//CHANGEME: Change url's below
+const LOGIN_URL = 'https://reqres.in/api/login'
+const REGISTER_URL = 'https://reqres.in/api/register'
 // DELETEME: A test JWT
 const TEST_JWT_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImp0aSI6IjU1M2IyZmJmLTFmYzItNDZhZS1iMjc1LWZmNjNiODVjYTFjMyIsImlhdCI6MTYwMzEzNjQxNCwiZXhwIjoxNjAzMTQwMDE0fQ.ZVxhFc0CB-NVspQmb__vUAqWSQXuaxtiY7DHM_isEw4";
 
@@ -48,7 +50,7 @@ export class AuthService {
     // TODO: Add send to server part here
     //DELETEME: the next line
     if (credentials.email !== "root" || credentials.password !== "toor") return of(null);
-    return this.http.post(SERVER_URL,credentials).pipe(
+    return this.http.post(LOGIN_URL,credentials).pipe(
       take(1),
       catchError((err) =>{
         console.log("Server Error..");
@@ -75,6 +77,23 @@ export class AuthService {
 
     );
   
+  }
+
+  register(formData:{email:string, password:string}): Observable<any>{
+    return this.http.post(REGISTER_URL, formData).pipe(
+      take(1),
+      
+      catchError((err) =>{
+        console.log(err);
+        return of(false);
+      }),
+      switchMap(res=>{
+        if (res) return of(true);
+        return of(false);
+      })
+
+
+    )
   }
 
   getUser(){
