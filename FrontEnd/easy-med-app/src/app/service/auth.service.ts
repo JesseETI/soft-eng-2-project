@@ -58,7 +58,7 @@ export class AuthService {
       
       map((res:any) => {
         if (res) return TEST_JWT_KEY;
-        return res; //DELETEME: replace this with return res;
+        return TEST_JWT_KEY; //DELETEME: replace this with return res;
       }),
       switchMap(token =>{
         if (token === null) return of(null);
