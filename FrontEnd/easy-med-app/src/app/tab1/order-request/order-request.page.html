@@ -2,11 +2,39 @@
   <ion-toolbar>
     <ion-title>order-request</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-back-button defaultHref="members/tab1"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  {{myForm.value|json}}
+
+<form [formGroup]="myForm">
+
+  <ion-item>
+    <ion-label position="floating">Patient name</ion-label>
+    <ion-input formControlName="name"></ion-input>
+  </ion-item>
+  <div formArrayName="medicines">
+    <ion-list *ngFor="let med of medicines.controls; let i=index" [formGroupName] = "i">
+      <ion-item-sliding>
+    
+        <ion-item>
+          <ion-label position="floating" >Enter Medication</ion-label>
+          <ion-input formControlName="medInfo" (ngModelChange)="setMedCount()"></ion-input>
+        </ion-item>
+    
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteMedicine(i)">delete</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+
+  <ion-button (click)="addMedicine()">Add medicine</ion-button>
+  <ion-button type="submit" (click)= "submitOrder()" [disabled]="medCount==0">Submit</ion-button>
+
+</form>
 
 </ion-content>
