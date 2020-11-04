@@ -3,7 +3,9 @@
 
 ## Backend instructions
 
-To run: source venv/bin/activate
+To run: 
+1. in terminal, run command: source venv/bin/activate
+2. after cd into project directory & run command: python3 manage.py runserver
 
 To sign up: send POST request with email and password to localhost:8000/api/users/
 
