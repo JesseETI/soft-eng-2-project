@@ -4,14 +4,18 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 # Create your models here.
 class CustomUserManager(BaseUserManager):
 
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, email, password=None):
+
         if not email:
             raise ValueError("User must have an email address")
 
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = self.model(
+            email=self.normalize_email(email),
+        )
+
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
+
         return user
 
     def create_superuser(self, email, password, **extra_fields):
@@ -34,13 +38,18 @@ class User(AbstractUser):
     #fields
     username = None
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
+    date_created = models.DateTimeField(verbose_name="Date joined", auto_now_add=True)
+    last_login = models.DateTimeField(verbose_name="Last login", auto_now=True)
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
 
-    role = models.CharField(verbose_name="role", max_length=30, unique=False)
 
     def __str__(self):
         return self.email
@@ -50,13 +59,15 @@ class Medication(models.Model):
     name = models.CharField(verbose_name="name", max_length=60, unique=True)
     price = models.FloatField()
 
-class Order(models.Model):
-    #order class
-    medications = models.ForeignKey(Medication, on_delete=models.CASCADE, related_name="Medications")
-
-
 class Pharmacy(models.Model):
     name = models.CharField(verbose_name="name", max_length=60, unique=True)
     address = models.CharField(verbose_name="address", max_length=100)
     contact = models.CharField(verbose_name="contact", max_length=30)
-    orders = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="Order")
+
+class PrescriptonOrder(models.Model):
+    prescriptionText = models.TextField(max_length=512, blank=True, null=True, verbose_name="prescription text")
+    prescriptionImage = models.ImageField(upload_to="prescriptions/", null=True, blank=True)
+    pharmacy = models.ForeignKey(Pharmacy, on_delete=models.CASCADE, verbose_name="prescription receiver")
+    user = models.CharField(max_length=60, verbose_name="user's email")
+
+
