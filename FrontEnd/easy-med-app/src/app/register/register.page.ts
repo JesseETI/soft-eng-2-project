@@ -16,8 +16,11 @@ export class RegisterPage implements OnInit {
 
   }
   // TODO: Add validation
-  register(formData:any) {
-    console.log(formData.value);
+  register(formData) {
+    if (formData.value.password != formData.value.confirm){
+      this.presentAlert("Registration", "Mismatching Passwords");
+      return;
+    }
     this.auth.register(formData.value).subscribe(async res =>{
       console.log("Returned register value: " + res);
       if (res){
@@ -29,15 +32,19 @@ export class RegisterPage implements OnInit {
         toast.present();
         this.router.navigateByUrl('/');
       }else{
-        const alert = await this.alertCtrl.create({
-          header: 'Registration Failed',
-          message: 'try again.',
-          buttons: ['OK']
-        });
-        await alert.present();
+        
         this.router.navigateByUrl('register');
       }
     });
   }
+  async presentAlert(status, reason) {
+    const alert = await this.alertCtrl.create({
+        header: status + ' Error',
+        message: reason,
+        buttons: ['OK']
+    });
+
+    await alert.present();
+}
 
 }
