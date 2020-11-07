@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpConfigInterceptor } from '../app/interceptor.service';
+import { HttpConfigInterceptor } from './service/interceptor.service';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
