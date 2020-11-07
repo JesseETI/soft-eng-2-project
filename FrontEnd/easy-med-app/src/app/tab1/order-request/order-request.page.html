@@ -10,31 +10,54 @@
 <ion-content>
   {{myForm.value|json}}
 
-<form [formGroup]="myForm">
-
-  <ion-item>
-    <ion-label position="floating">Patient name</ion-label>
-    <ion-input formControlName="name"></ion-input>
-  </ion-item>
-  <div formArrayName="medicines">
-    <ion-list *ngFor="let med of medicines.controls; let i=index" [formGroupName] = "i">
-      <ion-item-sliding>
-    
-        <ion-item>
-          <ion-label position="floating" >Enter Medication</ion-label>
-          <ion-input formControlName="medInfo" (ngModelChange)="setMedCount()"></ion-input>
-        </ion-item>
-    
-        <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="deleteMedicine(i)">delete</ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
+<ion-card>
+  <form [formGroup]="myForm">
+    <ion-item>
+      <ion-label position="floating">Patient name..</ion-label>
+      <ion-input formControlName="name" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Select your pharmacy</ion-label>
+      <ion-select formControlName="pharmacy" >
+       <ion-select-option *ngFor="let pharm of pharmacies"  [value]="pharm">{{pharm}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div formArrayName="medicines">
+      <ion-list *ngFor="let med of medicines.controls; index as i" [formGroupName] = "i">
+            <ion-item-sliding>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating" >Medication name..</ion-label>
+                      <ion-input formControlName="medName" (ngModelChange)="setMedCount()"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating" >dosage..</ion-label>
+                      <ion-input formControlName="dosage" (ngModelChange)="setMedCount()"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating" >quantity..</ion-label>
+                      <ion-input formControlName="quantity" type="number" (ngModelChange)="setMedCount()"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col class="ion-text-center ion-vertical-align-center">
+                      <ion-button color="danger" (click)="deleteMedicine(i)">delete</ion-button>
+                  </ion-col>
+                </ion-row>  
+              </ion-grid>
+            </ion-item-sliding>
+      </ion-list>
+    </div>
+  <div class="ion-text-center">
+    <ion-button (click)="addMedicine()">Add medicine</ion-button>
+    <ion-button type="submit" (click)= "submitOrder()" [disabled]="submitButton()">Submit</ion-button>
   </div>
-
-  <ion-button (click)="addMedicine()">Add medicine</ion-button>
-  <ion-button type="submit" (click)= "submitOrder()" [disabled]="medCount==0">Submit</ion-button>
-
-</form>
+  </form>
+</ion-card>
 
 </ion-content>

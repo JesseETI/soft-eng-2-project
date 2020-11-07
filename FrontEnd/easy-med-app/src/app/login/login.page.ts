@@ -21,6 +21,7 @@ export class LoginPage implements OnInit {
   login() {
     this.auth.login(this.credentials).subscribe(async res => {
       if (res) {
+        console.log(res);
         this.router.navigateByUrl('/members');
       } else {
         const alert = await this.alertCtrl.create({

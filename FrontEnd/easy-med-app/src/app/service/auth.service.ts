@@ -5,7 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Platform } from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import { BehaviorSubject, from, Observable, of} from 'rxjs';
-import {take,map,switchMap, catchError, tap} from 'rxjs/operators';
+import {take,map,switchMap, catchError} from 'rxjs/operators';
 const helper = new JwtHelperService();
 const TOKEN_KEY = 'jwt-token';
 //CHANGEME: Change url's below
@@ -63,7 +63,7 @@ export class AuthService {
       switchMap(token =>{
         if (token === null) return of(null);
         let decoded = helper.decodeToken(token);
-        console.log('login decoded: ' + decoded);
+        console.log('login decoded: ' + decoded.values);
         this.userData.next(decoded);
 
         let storageObs = from(this.storage.set(TOKEN_KEY,token));

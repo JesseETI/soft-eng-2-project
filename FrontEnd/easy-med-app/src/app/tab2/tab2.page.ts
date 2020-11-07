@@ -1,3 +1,4 @@
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,6 +8,16 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
+  makeRequest() {
+    this.http.get("https://pokeapi.co/api/v2/pokemon/ditto").subscribe(res=>{
+      console.log(res);
+    })
+  }
+  makeErrorRequest() {
+  this.http.get("https://pokeapi.co/api/v2/pokemon/ditt").subscribe(res=>{
+    console.log(res);
+  });
+  }
 }
