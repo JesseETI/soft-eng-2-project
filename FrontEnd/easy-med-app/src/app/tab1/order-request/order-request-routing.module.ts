@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: OrderRequestPage
+  },  {
+    path: 'pharmacies',
+    loadChildren: () => import('./pharmacies/pharmacies.module').then( m => m.PharmaciesPageModule)
   }
+
 ];
 
 @NgModule({

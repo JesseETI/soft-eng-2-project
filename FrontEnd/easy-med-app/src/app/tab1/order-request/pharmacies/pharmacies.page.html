@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>pharmacies</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div center>
+    <ion-button *ngFor="let pharm of pharmacies" (click)="pharmacyClick(pharm)"
+      >{{pharm}}</ion-button
+    >
+  </div>
+</ion-content>
