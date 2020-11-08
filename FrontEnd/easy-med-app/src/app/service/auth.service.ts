@@ -12,14 +12,14 @@ const TOKEN_KEY = 'jwt-token';
 const LOGIN_URL = 'https://reqres.in/api/login'
 const REGISTER_URL = 'https://reqres.in/api/register'
 // DELETEME: A test JWT
-const TEST_JWT_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImp0aSI6IjU1M2IyZmJmLTFmYzItNDZhZS1iMjc1LWZmNjNiODVjYTFjMyIsImlhdCI6MTYwMzEzNjQxNCwiZXhwIjoxNjAzMTQwMDE0fQ.ZVxhFc0CB-NVspQmb__vUAqWSQXuaxtiY7DHM_isEw4";
+const TEST_JWT_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJyb2xlIjoiVVNFUiJ9.606obpuSoyZN8sAhMxZ8H2Uak_9eew8psOeAHHlJH5Y";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   public user: Observable<any>;
-  private userData= new BehaviorSubject(null);
+  public userData= new BehaviorSubject(null);
  
   constructor(private storage: Storage, private http: HttpClient, 
     private plt: Platform, private router: Router) { 
@@ -57,8 +57,8 @@ export class AuthService {
       }),
       
       map((res:any) => {
-        if (res) return TEST_JWT_KEY;
-        return TEST_JWT_KEY; //DELETEME: replace this with return res;
+        if (res) return TEST_JWT_KEY; //TODO: change to get just the token from server response
+        return res; //DELETEME: replace this with return res;
       }),
       switchMap(token =>{
         if (token === null) return of(null);

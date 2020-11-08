@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { from, Observable, throwError } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import {Storage} from '@ionic/storage';
 @Injectable()
@@ -14,8 +14,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        // YOU CAN ALSO DO THIS
-        // const token = this.authenticationService.getToke()
+        
 
         return from(this.storage.get('jwt-token'))
             .pipe(
@@ -33,13 +32,14 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     return next.handle(request).pipe(
                         map(event => {
                             if (event instanceof HttpResponse) {
-                                // do nothing for now
+                                //TODO: do something to the response
                             }
                             return event;
                         }),
                         catchError((error: HttpErrorResponse) => {
+                            console.log(error);
                             const status =  error.status;
-                            const reason = error && error.error.reason ? error.error.reason : '';
+                            const reason = (error && error.error.error) ? error.error.error : '';
 
                             this.presentAlert(status, reason);
                             return throwError(error);

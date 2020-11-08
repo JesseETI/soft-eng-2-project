@@ -11,7 +11,7 @@ export class Tab1Page {
   constructor(private router: Router) {}
 
   openForm() {
-    this.router.navigate(['/members/tab1/order-request']);
+    this.router.navigate(['/users/tab1/order']);
   }
 
 }

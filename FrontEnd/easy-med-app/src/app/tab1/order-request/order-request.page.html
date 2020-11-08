@@ -1,14 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>order-request</ion-title>
+    <ion-title>Request an Order</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="members/tab1"></ion-back-button>
+      <ion-back-button defaultHref="users/tab1"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  {{myForm.value|json}}
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Request</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-card>
   <form [formGroup]="myForm">

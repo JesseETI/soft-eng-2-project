@@ -10,7 +10,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  credentials= {email: '', password:''};
+  credentials= {email: 'eve.holt@reqres.in', password:'cityslicka'};
   constructor(private auth: AuthService, private alertCtrl: AlertController,private router: Router) {
 
    }
@@ -22,14 +22,9 @@ export class LoginPage implements OnInit {
     this.auth.login(this.credentials).subscribe(async res => {
       if (res) {
         console.log(res);
-        this.router.navigateByUrl('/members');
+        this.router.navigateByUrl('/users');
       } else {
-        const alert = await this.alertCtrl.create({
-          header: 'Login Failed',
-          message: 'Wrong credentials.',
-          buttons: ['OK']
-        });
-        await alert.present();
+        //TODO: if login fails
       }
     });
   }

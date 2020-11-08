@@ -6,8 +6,9 @@ const routes: Routes = [
   {
     path: '',
     component: Tab1Page,
-  },  {
-    path: 'order-request',
+  },
+  {
+    path: 'order',
     loadChildren: () => import('./order-request/order-request.module').then( m => m.OrderRequestPageModule)
   }
 

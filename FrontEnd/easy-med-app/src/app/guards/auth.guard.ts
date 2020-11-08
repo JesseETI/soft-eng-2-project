@@ -12,10 +12,11 @@ export class AuthGuard implements CanActivate{
   constructor(private router: Router, private auth: AuthService, private alertCtrl: AlertController) { }
  
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.auth.user.pipe(
+    return this.auth.userData.pipe(
       take(1),
       map(user => {
-        if (!user) {
+        console.log(user);
+        if (!user || user.role !== route.data.role) {
           this.alertCtrl.create({
             header: 'Unauthorized',
             message: 'You are not allowed to access that page.',
@@ -25,6 +26,7 @@ export class AuthGuard implements CanActivate{
           this.router.navigateByUrl('/');
           return false;
         } else {
+          //TODO: add role pages redirection here
           return true;
         }
       })
