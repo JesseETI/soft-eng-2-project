@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup,FormControl, Validators } from '@angular/forms';
-import { ifError } from 'assert';
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { filter, take } from 'rxjs/operators';
+import { OrdersService } from 'src/app/service/orders.service';
+
 
 @Component({
   selector: 'app-order-request',
@@ -10,10 +14,23 @@ import { ifError } from 'assert';
 export class OrderRequestPage implements OnInit {
   myForm: FormGroup;
   medCount: number;
-  pharmacies= ["Pharmacy1","Pharmacy2","Pharmacy3","Pharmacy4","Pharmacy5","Pharmacy6"];
-  constructor(private fb: FormBuilder) { }
+  pharmacies:String[];
+ 
+  constructor(private fb: FormBuilder , private orders:OrdersService, private router: Router) {
+    this.orders.getOrders().pipe(
+     take(1),
+     )
+     .subscribe(m => {
+      this.pharmacies = m;
+    },
+    err =>{
+      console.log(err);
+      this.router.navigateByUrl("/users");
+    }) ;
+   }
 
   ngOnInit() {
+    
     this.medCount=0;
     this.myForm = this.fb.group({
       name:new FormControl('', Validators.required),
