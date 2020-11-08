@@ -5,9 +5,13 @@
 </ion-header>
 
 <ion-content>
-  <div center>
-    <ion-button *ngFor="let pharm of pharmacies" (click)="pharmacyClick(pharm)"
-      >{{pharm}}</ion-button
-    >
-  </div>
+  <ion-card
+    button
+    *ngFor="let pharm of pharmacies"
+    (click)="pharmacyClick(pharm)"
+  >
+    <ion-card-header></ion-card-header>
+    <ion-card-title>{{pharm}}</ion-card-title>
+    <ion-card-subtitle>Address</ion-card-subtitle>
+  </ion-card>
 </ion-content>

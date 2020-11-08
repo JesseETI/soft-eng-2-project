@@ -9,6 +9,6 @@ export class OrdersService {
   constructor() {}
 
   getOrders() {
-    return of(["pharmacy1", "pharmacy2", "pharmacy3", "pharmacy4"]);
+    return of(["pharmacy 1", "pharmacy 2", "pharmacy 3", "pharmacy 4"]);
   }
 }
