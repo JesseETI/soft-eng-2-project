@@ -1,72 +1,73 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { from, Observable, throwError } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+} from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { AlertController } from "@ionic/angular";
+import { from, Observable, throwError } from "rxjs";
+import { catchError, map, switchMap } from "rxjs/operators";
 
-import {Storage} from '@ionic/storage';
+import { Storage } from "@ionic/storage";
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
+  constructor(
+    private alertController: AlertController,
+    private storage: Storage
+  ) {}
 
-    
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    return from(this.storage.get("jwt-token")).pipe(
+      switchMap((token) => {
+        console.log(token);
+        if (token) {
+          console.log("Token Found");
+          request = request.clone({
+            headers: request.headers.set("Authorization", "Bearer " + token),
+          });
+        }
 
-    constructor(private alertController: AlertController, private storage: Storage) {}
+        if (!request.headers.has("Content-Type")) {
+          request = request.clone({
+            headers: request.headers.set("Content-Type", "application/json"),
+          });
+        }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        return next.handle(request).pipe(
+          map((event) => {
+            if (event instanceof HttpResponse) {
+              //TODO: do something to the response
+            }
+            return event;
+          }),
+          catchError((error: HttpErrorResponse) => {
+            console.log(error);
+            const status = error.status;
+            const reason =
+              error && error.error.email[0] ? error.error.email[0] : "";
 
-        
+            this.presentAlert(status, reason);
+            return throwError(error);
+          })
+        );
+      })
+    );
+  }
 
-        return from(this.storage.get('jwt-token'))
-            .pipe(
-                switchMap(token => {
-                    console.log(token);
-                    if (token) {
-                        console.log("Token Found");
-                        request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
-                    }
+  async presentAlert(status, reason) {
+    const alert = await this.alertController.create({
+      header: status + " Error",
 
-                    if (!request.headers.has('Content-Type')) {
-                        request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
-                    }
+      message: reason,
+      buttons: ["OK"],
+    });
 
-                    return next.handle(request).pipe(
-                        map(event => {
-                            if (event instanceof HttpResponse) {
-                                //TODO: do something to the response
-                            }
-                            return event;
-                        }),
-                        catchError((error: HttpErrorResponse) => {
-                            console.log(error);
-                            const status =  error.status;
-                            const reason = (error && error.error.error) ? error.error.error : '';
-
-                            this.presentAlert(status, reason);
-                            return throwError(error);
-                        })
-                    );
-                })
-            );
-
-
-    }
-
-    async presentAlert(status, reason) {
-        const alert = await this.alertController.create({
-            header: status + ' Error',
-            
-            message: reason,
-            buttons: ['OK']
-        });
-
-        await alert.present();
-    }
+    await alert.present();
+  }
 }
-        
-        
-        
- 
-
-    
-    
-  

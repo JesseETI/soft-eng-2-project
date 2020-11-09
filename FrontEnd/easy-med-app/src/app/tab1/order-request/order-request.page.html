@@ -16,9 +16,9 @@
 
   <ion-card>
     <form [formGroup]="myForm">
-      <ion-item>
-        <ion-label position="floating">Patient name..</ion-label>
-        <ion-input formControlName="name"></ion-input>
+      <ion-item hidden>
+        <ion-label position="floating">Patient Email..</ion-label>
+        <ion-input formControlName="email"></ion-input>
       </ion-item>
       <ion-item button routerLink="pharmacies">
         <ion-label

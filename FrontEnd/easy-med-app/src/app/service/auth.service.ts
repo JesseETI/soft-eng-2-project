@@ -9,11 +9,9 @@ import { take, map, switchMap, catchError, filter } from "rxjs/operators";
 const helper = new JwtHelperService();
 const TOKEN_KEY = "jwt-token";
 //CHANGEME: Change url's below
-const LOGIN_URL = "https://reqres.in/api/login";
-const REGISTER_URL = "https://reqres.in/api/register";
+const LOGIN_URL = "http://localhost:8001/api/auth/login/";
+const REGISTER_URL = "http://localhost:8001/api/users/";
 // DELETEME: A test JWT
-const TEST_JWT_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJyb2xlIjoiVVNFUiJ9.606obpuSoyZN8sAhMxZ8H2Uak_9eew8psOeAHHlJH5Y";
 
 @Injectable({
   providedIn: "root",
@@ -55,8 +53,8 @@ export class AuthService {
       }),
 
       map((res: any) => {
-        if (res) return TEST_JWT_KEY; //TODO: change to get just the token from server response
-        return res; //DELETEME: replace this with return res;
+        if (res) return res.token; //TODO: change to get just the token from server response
+        return null; //DELETEME: replace this with return res;
       }),
       switchMap((token) => {
         if (token == null) return of(null);
@@ -70,9 +68,10 @@ export class AuthService {
   }
 
   register(formData: { email: string; password: string }): Observable<any> {
+    formData = { email: formData.email, password: formData.password };
+    console.log(formData);
     return this.http.post(REGISTER_URL, formData).pipe(
       take(1),
-
       catchError((err) => {
         console.log(err);
         return of(false);

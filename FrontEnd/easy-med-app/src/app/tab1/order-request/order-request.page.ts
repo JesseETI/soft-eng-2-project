@@ -9,7 +9,9 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import { NavController } from "@ionic/angular";
 import { filter, take } from "rxjs/operators";
+import { AuthService } from "src/app/service/auth.service";
 import { OrdersService } from "src/app/service/orders.service";
+import { isError } from "util";
 
 @Component({
   selector: "app-order-request",
@@ -25,7 +27,8 @@ export class OrderRequestPage implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private orders: OrdersService,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -39,9 +42,12 @@ export class OrderRequestPage implements OnInit {
   ngOnInit() {
     this.medCount = 0;
     this.myForm = this.fb.group({
-      name: new FormControl("", Validators.required),
+      email: new FormControl("", Validators.required),
       pharmacy: new FormControl("", Validators.required),
       medicines: this.fb.array([]),
+    });
+    this.auth.user.subscribe((user) => {
+      this.myForm.patchValue({ email: user.email });
     });
   }
 
@@ -51,8 +57,8 @@ export class OrderRequestPage implements OnInit {
   get pharmacy() {
     return this.myForm.get("pharmacy");
   }
-  get name() {
-    return this.myForm.get("name");
+  get email() {
+    return this.myForm.get("email");
   }
 
   addMedicine() {
@@ -69,6 +75,8 @@ export class OrderRequestPage implements OnInit {
     this.setMedCount();
   }
   submitOrder() {
+    //TODO: flatten the medication to allow change
+    //http://localhost:8001/api/orders/
     console.log(this.myForm.value);
   }
   setMedCount() {
@@ -81,7 +89,7 @@ export class OrderRequestPage implements OnInit {
   }
   submitButton() {
     if (
-      this.name.value.length > 0 &&
+      this.email.value.length > 0 &&
       this.pharmacy.value.length > 0 &&
       this.medCount > 0
     )

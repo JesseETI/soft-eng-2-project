@@ -14,6 +14,7 @@ export class OrdersService {
         {
           name: "Pharmacy1",
           address: "address1",
+          contact: "12312",
         },
         {
           name: "Pharmacy2",
