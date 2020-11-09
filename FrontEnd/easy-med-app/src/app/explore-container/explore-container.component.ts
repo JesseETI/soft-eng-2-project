@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from "@angular/core";
 })
 export class ExploreContainerComponent implements OnInit {
   @Input() message: string;
-
+  @Input() icon: string;
   constructor() {}
 
   ngOnInit() {}

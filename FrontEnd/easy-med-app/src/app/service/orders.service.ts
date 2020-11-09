@@ -8,7 +8,26 @@ export class OrdersService {
   private _selectedPharmacy;
   constructor() {}
 
-  getOrders() {
-    return of(["pharmacy 1", "pharmacy 2", "pharmacy 3", "pharmacy 4"]);
+  getOrders(): Observable<any> {
+    return of({
+      pharmacies: [
+        {
+          name: "Pharmacy1",
+          address: "address1",
+        },
+        {
+          name: "Pharmacy2",
+          address: "address2",
+        },
+        {
+          name: "Pharmacy3",
+          address: "address3",
+        },
+        {
+          name: "Pharmacy4",
+          address: "address4",
+        },
+      ],
+    });
   }
 }
