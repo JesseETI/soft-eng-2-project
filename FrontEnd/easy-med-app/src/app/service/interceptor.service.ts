@@ -50,7 +50,13 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             console.log(error);
             const status = error.status;
             const reason =
-              error && error.error.email[0] ? error.error.email[0] : "";
+              error && error.error.email
+                ? error.error.email[0]
+                : error.error.non_field_errors
+                ? error.error.non_field_errors[0]
+                : error.status === 0
+                ? "We have a server error, it will  be fixed soon.."
+                : "Unknown Error.. contact our developers";
 
             this.presentAlert(status, reason);
             return throwError(error);

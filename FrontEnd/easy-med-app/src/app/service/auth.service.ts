@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Platform } from "@ionic/angular";
+import { AlertController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { BehaviorSubject, from, Observable, of } from "rxjs";
 import { take, map, switchMap, catchError, filter } from "rxjs/operators";
@@ -24,7 +24,8 @@ export class AuthService {
     private storage: Storage,
     private http: HttpClient,
     private plt: Platform,
-    private router: Router
+    private router: Router,
+    private alertCtrl: AlertController
   ) {
     this.loadStoredToken();
     this.user = this.userData.asObservable().pipe(filter((user) => user)); //filter out null
@@ -47,10 +48,15 @@ export class AuthService {
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(LOGIN_URL, credentials).pipe(
       take(1),
-      catchError((err) => {
-        console.log("Server Error..");
-        return of(null);
-      }),
+      // catchError((err) => {
+      //   if (err.status === 0) {
+      //     err.message =
+      //       "Something wrong with our servers.. please wait for an update";
+      //     err.name = "Server Error";
+      //     this.presentAlert(err.name, err.message);
+      //   }
+      //   return of(false);
+      // }),
 
       map((res: any) => {
         if (res) return res.token; //TODO: change to get just the token from server response
@@ -91,5 +97,16 @@ export class AuthService {
       this.router.navigateByUrl("/");
       this.userData.next({ msg: "Not a user" });
     });
+  }
+
+  async presentAlert(status, reason) {
+    const alert = await this.alertCtrl.create({
+      header: status + " Error",
+
+      message: reason,
+      buttons: ["OK"],
+    });
+
+    await alert.present();
   }
 }
