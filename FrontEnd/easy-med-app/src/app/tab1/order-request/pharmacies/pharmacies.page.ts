@@ -14,7 +14,7 @@ export class PharmaciesPage implements OnInit {
 
   constructor(private orders: OrdersService, private router: Router) {
     this.orders
-      .getOrders()
+      .getPharms()
       // .pipe(take(1))
       .subscribe(
         (m) => {

@@ -8,7 +8,7 @@ export class OrdersService {
   private _selectedPharmacy;
   constructor() {}
 
-  getOrders(): Observable<any> {
+  getPharms(): Observable<any> {
     return of({
       pharmacies: [
         {
@@ -31,4 +31,9 @@ export class OrdersService {
       ],
     });
   }
+
+  getOrders(): Observable<any> {
+    return of(null);
+  }
+  sendOrder(formData) {}
 }
