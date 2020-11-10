@@ -69,5 +69,6 @@ class PrescriptonOrder(models.Model):
     prescriptionImage = models.ImageField(upload_to="prescriptions/", null=True, blank=True)
     pharmacy = models.ForeignKey(Pharmacy, on_delete=models.CASCADE, verbose_name="prescription receiver")
     user = models.CharField(max_length=60, verbose_name="user's email")
+    status = models.IntegerField(verbose_name="order status")
 
 
