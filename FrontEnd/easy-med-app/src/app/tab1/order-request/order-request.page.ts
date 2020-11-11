@@ -77,8 +77,7 @@ export class OrderRequestPage implements OnInit {
   submitOrder() {
     //TODO: flatten the medication to allow change
     //http://localhost:8001/api/orders/
-
-    console.log(this.myForm.value);
+    this.orders.sendOrder(this.myForm.value);
   }
   setMedCount() {
     this.medCount = 0;

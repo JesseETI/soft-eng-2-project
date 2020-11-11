@@ -19,14 +19,17 @@ export class OrdersService {
         {
           name: "Pharmacy2",
           address: "address2",
+          contact: "12312",
         },
         {
           name: "Pharmacy3",
           address: "address3",
+          contact: "12312",
         },
         {
           name: "Pharmacy4",
           address: "address4",
+          contact: "12312",
         },
       ],
     });
@@ -35,5 +38,7 @@ export class OrdersService {
   getOrders(): Observable<any> {
     return of(null);
   }
-  sendOrder(formData) {}
+  sendOrder(formData) {
+    console.log(formData);
+  }
 }

@@ -22,11 +22,11 @@ class OrderViewSet(viewsets.ModelViewSet):
         try:
             if (user.role =="USER"):
                 orders_queryset = PerscriptionOrder.objects.filter(user = user.id)
-            else if (user.role =="PHARM"):
+            elif (user.role =="PHARM"):
                 pharmacy = Pharmacy.objects.filter(pharmacist = user.id).first()
                 orders_queryset = PerscriptionOrder.objects.filter(pharmacy = pharmacy.id)
 
-            serializer = OrderSerializer(orders_queryset, many = True
+            serializer = OrderSerializer(orders_queryset, many = True)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
