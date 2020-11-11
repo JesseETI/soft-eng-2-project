@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       map((user) => {
         console.log(user);
         //FIXME: if (!user || user.role !== route.data.role) change below to select by user
-        if (!user) {
+        if (!user || user.msg === "Not a user") {
           this.alertCtrl
             .create({
               header: "Unauthorized",
