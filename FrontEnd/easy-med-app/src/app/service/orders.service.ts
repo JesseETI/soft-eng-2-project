@@ -72,7 +72,7 @@ export class OrdersService {
       })
     );
   }
-  sendOrder(formData): Observable<any> {
-    return of(console.log(formData));
+  sendOrder(formData) {
+    console.log(formData);
   }
 }

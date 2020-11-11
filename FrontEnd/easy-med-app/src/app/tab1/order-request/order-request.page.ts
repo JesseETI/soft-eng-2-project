@@ -1,3 +1,4 @@
+import { analyzeAndValidateNgModules } from "@angular/compiler";
 import { Component, OnInit } from "@angular/core";
 import {
   FormArray,
@@ -21,7 +22,7 @@ import { isError } from "util";
 export class OrderRequestPage implements OnInit {
   myForm: FormGroup;
   medCount: number;
-  selectedPharmacy: string;
+  selectedPharmacy: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -88,7 +89,12 @@ export class OrderRequestPage implements OnInit {
     console.log(this.medCount);
   }
   submitButton() {
-    if (this.pharmacy.value.length > 0 && this.medCount > 0) return false;
+    if (
+      this.selectedPharmacy &&
+      this.selectedPharmacy.name.length > 0 &&
+      this.medCount > 0
+    )
+      return false;
     return true;
   }
 }
