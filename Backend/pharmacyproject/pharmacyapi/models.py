@@ -37,7 +37,8 @@ class User(AbstractUser):
 
     #fields
     username = None
-    email = models.EmailField(verbose_name="email", max_length=60, unique=True)
+    email = models.EmailField(verbose_name="User email", max_length=60, unique=True)
+    role = models.CharField(max_length=5,verbose_name="User role")
     date_created = models.DateTimeField(verbose_name="Date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="Last login", auto_now=True)
     is_admin = models.BooleanField(default=False)
@@ -61,6 +62,7 @@ class Medication(models.Model):
 
 class Pharmacy(models.Model):
     name = models.CharField(verbose_name="name", max_length=60, unique=True)
+    pharmacist = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Pharmacist")
     address = models.CharField(verbose_name="address", max_length=100)
     contact = models.CharField(verbose_name="contact", max_length=30)
 
