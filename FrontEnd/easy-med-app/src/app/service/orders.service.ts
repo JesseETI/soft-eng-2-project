@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Observable, of, throwError } from "rxjs";
+import { map } from "rxjs/operators";
+import { AuthService } from "./auth.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class OrdersService {
   private _selectedPharmacy;
-  constructor() {}
+  constructor(private auth: AuthService) {}
 
   getPharms(): Observable<any> {
     return of({
@@ -40,30 +42,35 @@ export class OrdersService {
   }
 
   getOrders(): Observable<any> {
-    return of([
-      {
-        prescriptionText: "",
-        pharmacy: {
-          name: "Pharmacy1",
-          pharmacist: { email: "Jose@hose.com", role: "PHARM" },
-          address: "address1",
-          contact: "12312",
-        },
-        user: "ram@ram.com",
-        status: "0",
-      },
-      {
-        prescriptionText: "",
-        pharmacy: {
-          name: "Pharmacy1",
-          pharmacist: { email: "Jose@hose.com", role: "PHARM" },
-          address: "address1",
-          contact: "12312",
-        },
-        user: "ram@ram.com",
-        status: "1",
-      },
-    ]);
+    return this.auth.user.pipe(
+      map((user) => {
+        if (user.role === "USER")
+          return [
+            {
+              prescriptionText: "",
+              pharmacy: {
+                name: "Pharmacy1",
+                pharmacist: { email: "Jose@hose.com", role: "PHARM" },
+                address: "address1",
+                contact: "12312",
+              },
+              user: "ram@ram.com",
+              status: "0",
+            },
+            {
+              prescriptionText: "",
+              pharmacy: {
+                name: "Pharmacy1",
+                pharmacist: { email: "Jose@hose.com", role: "PHARM" },
+                address: "address1",
+                contact: "12312",
+              },
+              user: "ram@ram.com",
+              status: "1",
+            },
+          ];
+      })
+    );
   }
   sendOrder(formData): Observable<any> {
     return of(console.log(formData));
