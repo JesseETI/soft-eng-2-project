@@ -88,12 +88,7 @@ export class OrderRequestPage implements OnInit {
     console.log(this.medCount);
   }
   submitButton() {
-    if (
-      this.email.value.length > 0 &&
-      this.pharmacy.value.length > 0 &&
-      this.medCount > 0
-    )
-      return false;
+    if (this.pharmacy.value.length > 0 && this.medCount > 0) return false;
     return true;
   }
 }
