@@ -11,7 +11,6 @@ const TOKEN_KEY = "jwt-token";
 //CHANGEME: Change url's below
 const LOGIN_URL = "http://localhost:8001/api/auth/login/";
 const REGISTER_URL = "http://localhost:8001/api/users/";
-// DELETEME: A test JWT
 
 @Injectable({
   providedIn: "root",

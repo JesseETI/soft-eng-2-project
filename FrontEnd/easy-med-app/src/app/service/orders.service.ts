@@ -13,21 +13,25 @@ export class OrdersService {
       pharmacies: [
         {
           name: "Pharmacy1",
+          pharmacist: { email: "Jose@hose.com", role: "PHARM" },
           address: "address1",
           contact: "12312",
         },
         {
           name: "Pharmacy2",
+          pharmacist: { email: "Jos@hose.com", role: "PHARM" },
           address: "address2",
           contact: "12312",
         },
         {
           name: "Pharmacy3",
+          pharmacist: { email: "Jo@hose.com", role: "PHARM" },
           address: "address3",
           contact: "12312",
         },
         {
           name: "Pharmacy4",
+          pharmacist: { email: "J@hose.com", role: "PHARM" },
           address: "address4",
           contact: "12312",
         },
@@ -36,9 +40,32 @@ export class OrdersService {
   }
 
   getOrders(): Observable<any> {
-    return of(null);
+    return of([
+      {
+        prescriptionText: "",
+        pharmacy: {
+          name: "Pharmacy1",
+          pharmacist: { email: "Jose@hose.com", role: "PHARM" },
+          address: "address1",
+          contact: "12312",
+        },
+        user: "ram@ram.com",
+        status: "0",
+      },
+      {
+        prescriptionText: "",
+        pharmacy: {
+          name: "Pharmacy1",
+          pharmacist: { email: "Jose@hose.com", role: "PHARM" },
+          address: "address1",
+          contact: "12312",
+        },
+        user: "ram@ram.com",
+        status: "1",
+      },
+    ]);
   }
-  sendOrder(formData) {
-    console.log(formData);
+  sendOrder(formData): Observable<any> {
+    return of(console.log(formData));
   }
 }
