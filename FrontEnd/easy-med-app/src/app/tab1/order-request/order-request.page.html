@@ -26,9 +26,9 @@
           pharmacy.."}}</ion-label
         >
       </ion-item>
-      <div formArrayName="medicines">
+      <div formArrayName="prescriptionText">
         <ion-list
-          *ngFor="let med of medicines.controls; index as i"
+          *ngFor="let med of prescriptionText.controls; index as i"
           [formGroupName]="i"
         >
           <ion-item-sliding>

@@ -73,6 +73,10 @@ export class OrdersService {
     );
   }
   sendOrder(formData) {
+    formData.prescriptionText = formData.prescriptionText.filter(
+      (res) => res.medName.length != 0
+    );
+    formData.prescriptionText = JSON.stringify(formData.prescriptionText);
     console.log(formData);
   }
 }

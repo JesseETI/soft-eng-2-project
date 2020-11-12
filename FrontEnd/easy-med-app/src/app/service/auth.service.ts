@@ -28,7 +28,7 @@ export class AuthService {
   ) {
     this.loadStoredToken();
     this.user = this.userData.asObservable().pipe(filter((user) => user)); //filter out null
-    this.user = of({ email: "Test@tst.com", role: "USER" }); //DELETEME: Remove later
+    this.user = of({ email: "Test@tst.com", role: "PHARM" }); //DELETEME: Remove later
   }
 
   loadStoredToken() {
