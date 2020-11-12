@@ -47,7 +47,10 @@ export class OrdersService {
         if (user.role === "USER")
           return [
             {
-              prescriptionText: "",
+              prescriptionText: JSON.stringify([
+                { medName: "Panadol", dosage: "12mg", quantity: 6 },
+                { medName: "test2", dosage: "10mg", quantity: 10 },
+              ]),
               pharmacy: {
                 name: "Pharmacy1",
                 pharmacist: { email: "Jose@hose.com", role: "PHARM" },

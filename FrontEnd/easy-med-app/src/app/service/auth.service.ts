@@ -8,7 +8,7 @@ import { BehaviorSubject, from, Observable, of } from "rxjs";
 import { take, map, switchMap, catchError, filter } from "rxjs/operators";
 const helper = new JwtHelperService();
 const TOKEN_KEY = "jwt-token";
-//CHANGEME: Change url's below
+//CHANGEME: Change urls below
 const LOGIN_URL = "http://localhost:8001/api/auth/login/";
 const REGISTER_URL = "http://localhost:8001/api/users/";
 
@@ -28,7 +28,7 @@ export class AuthService {
   ) {
     this.loadStoredToken();
     this.user = this.userData.asObservable().pipe(filter((user) => user)); //filter out null
-    this.user = of({ email: "Test@tst.com", role: "PHARM" }); //DELETEME: Remove later
+    this.user = of({ email: "Test@tst.com", role: "USER" }); //DELETEME: Remove later
   }
 
   loadStoredToken() {

@@ -37,7 +37,6 @@ export class AuthGuard implements CanActivate {
           this.router.navigateByUrl("/");
           return false;
         } else if (user.role == route.data.role) {
-          //TODO: add role pages redirection here
           return true;
         } else if (user.role === "USER") {
           this.router.navigateByUrl("/users");
