@@ -7,7 +7,8 @@ import { AuthService } from "./auth.service";
   providedIn: "root",
 })
 export class OrdersService {
-  private _selectedPharmacy;
+  private PHARMACY_URL = "https://";
+  private ORDER_URL = "https://";
   constructor(private auth: AuthService) {}
 
   getPharms(): Observable<any> {

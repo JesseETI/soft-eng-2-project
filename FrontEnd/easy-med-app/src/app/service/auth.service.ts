@@ -28,7 +28,6 @@ export class AuthService {
   ) {
     this.loadStoredToken();
     this.user = this.userData.asObservable().pipe(filter((user) => user)); //filter out null
-    this.user = of({ email: "Test@tst.com", role: "USER" }); //DELETEME: Remove later
   }
 
   loadStoredToken() {
@@ -60,7 +59,7 @@ export class AuthService {
 
       map((res: any) => {
         if (res) return res.token; //TODO: change to get just the token from server response
-        return null; //DELETEME: replace this with return res;
+        return null;
       }),
       switchMap((token) => {
         if (token == null) return of(null);
@@ -73,8 +72,16 @@ export class AuthService {
     );
   }
 
-  register(formData: { email: string; password: string }): Observable<any> {
-    formData = { email: formData.email, password: formData.password };
+  register(formData: {
+    email: string;
+    password: string;
+    role: string;
+  }): Observable<any> {
+    formData = {
+      email: formData.email,
+      password: formData.password,
+      role: "USER",
+    };
     console.log(formData);
     return this.http.post(REGISTER_URL, formData).pipe(
       take(1),
