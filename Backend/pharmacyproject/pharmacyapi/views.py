@@ -14,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class PharmacyViewSet(viewsets.ModelViewSet):
     queryset = Pharmacy.objects.all()
     serializer_class = PharmacySerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
 
 
 class OrderViewSet(viewsets.ModelViewSet):
