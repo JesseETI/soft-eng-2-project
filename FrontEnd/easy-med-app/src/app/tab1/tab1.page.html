@@ -20,6 +20,8 @@
     message="You have no orders yet..., click the add button below to make you order"
     icon="sad-outline"
   ></app-explore-container>
+  <app-order-card *ngFor="let order of orders" [order]="order">
+  </app-order-card>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="openForm()">

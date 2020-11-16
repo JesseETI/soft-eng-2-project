@@ -29,8 +29,8 @@ export class PharmaciesPage implements OnInit {
 
   ngOnInit() {}
 
-  pharmacyClick(str: string) {
-    let navExtra: NavigationExtras = { state: { selectedPharmacy: str } };
+  pharmacyClick(obj: any) {
+    let navExtra: NavigationExtras = { state: { selectedPharmacy: obj } };
     this.router.navigate(["/users/tab1/order/"], navExtra);
   }
 }

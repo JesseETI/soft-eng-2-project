@@ -21,7 +21,11 @@ export class AuthGuard implements CanActivate {
       map((user) => {
         console.log(user);
         //FIXME: if (!user || user.role !== route.data.role) change below to select by user
-        if (!user || user.msg === "Not a user") {
+        if (
+          !user ||
+          user.msg === "Not a user"
+          // || user.role !== route.data.role
+        ) {
           this.alertCtrl
             .create({
               header: "Unauthorized",
@@ -32,9 +36,12 @@ export class AuthGuard implements CanActivate {
 
           this.router.navigateByUrl("/");
           return false;
-        } else {
-          //TODO: add role pages redirection here
+        } else if (user.role == route.data.role) {
           return true;
+        } else if (user.role === "USER") {
+          this.router.navigateByUrl("/users");
+        } else if (user.role === "PHARM") {
+          this.router.navigateByUrl("/pharms");
         }
       })
     );

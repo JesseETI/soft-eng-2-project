@@ -1,3 +1,4 @@
+import { analyzeAndValidateNgModules } from "@angular/compiler";
 import { Component, OnInit } from "@angular/core";
 import {
   FormArray,
@@ -21,7 +22,7 @@ import { isError } from "util";
 export class OrderRequestPage implements OnInit {
   myForm: FormGroup;
   medCount: number;
-  selectedPharmacy: string;
+  selectedPharmacy: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,15 +45,15 @@ export class OrderRequestPage implements OnInit {
     this.myForm = this.fb.group({
       email: new FormControl("", Validators.required),
       pharmacy: new FormControl("", Validators.required),
-      medicines: this.fb.array([]),
+      prescriptionText: this.fb.array([]),
     });
     this.auth.user.subscribe((user) => {
       this.myForm.patchValue({ email: user.email });
     });
   }
 
-  get medicines() {
-    return this.myForm.get("medicines") as FormArray;
+  get prescriptionText() {
+    return this.myForm.get("prescriptionText") as FormArray;
   }
   get pharmacy() {
     return this.myForm.get("pharmacy");
@@ -68,10 +69,10 @@ export class OrderRequestPage implements OnInit {
       dosage: "",
       quantity: "",
     });
-    this.medicines.push(medicine);
+    this.prescriptionText.push(medicine);
   }
   deleteMedicine(index) {
-    this.medicines.removeAt(index);
+    this.prescriptionText.removeAt(index);
     this.setMedCount();
   }
   submitOrder() {
@@ -82,15 +83,14 @@ export class OrderRequestPage implements OnInit {
   setMedCount() {
     this.medCount = 0;
     const data = this.myForm.value;
-    for (let med of data.medicines) {
+    for (let med of data.prescriptionText) {
       if (med.medName.length > 0) this.medCount++;
     }
-    console.log(this.medCount);
   }
   submitButton() {
     if (
-      this.email.value.length > 0 &&
-      this.pharmacy.value.length > 0 &&
+      this.selectedPharmacy &&
+      this.selectedPharmacy.name.length > 0 &&
       this.medCount > 0
     )
       return false;
