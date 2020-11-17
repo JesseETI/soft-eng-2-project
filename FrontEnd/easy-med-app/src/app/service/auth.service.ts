@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { AlertController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
+import { decode } from "querystring";
 import { BehaviorSubject, from, Observable, of } from "rxjs";
 import { take, map, switchMap, catchError, filter } from "rxjs/operators";
 const helper = new JwtHelperService();
@@ -36,6 +37,7 @@ export class AuthService {
       console.log("token storage: ", token);
       if (token) {
         let decoded = helper.decodeToken(token);
+        decoded["role"] = "USER"; //DELETEME: remove for final
         console.log("decoded: ", decoded);
         this.userData.next(decoded);
       } else {
@@ -64,8 +66,8 @@ export class AuthService {
       switchMap((token) => {
         if (token == null) return of(null);
         let decoded = helper.decodeToken(token);
+        decoded["role"] = "USER"; //DELETEME: remove for final
         this.user = of(decoded);
-
         let storageObs = from(this.storage.set(TOKEN_KEY, token));
         return storageObs;
       })

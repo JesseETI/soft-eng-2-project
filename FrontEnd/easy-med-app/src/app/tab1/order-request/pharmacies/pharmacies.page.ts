@@ -13,18 +13,16 @@ export class PharmaciesPage implements OnInit {
   pharmacies: any;
 
   constructor(private orders: OrdersService, private router: Router) {
-    this.orders
-      .getPharms()
-      // .pipe(take(1))
-      .subscribe(
-        (m) => {
-          this.pharmacies = m;
-        },
-        (err) => {
-          console.log(err);
-          this.router.navigateByUrl("/users");
-        }
-      );
+    this.orders.getPharms().subscribe(
+      (m) => {
+        console.log(m);
+        this.pharmacies = m;
+      },
+      (err) => {
+        console.log(err);
+        this.router.navigateByUrl("/users");
+      }
+    );
   }
 
   ngOnInit() {}

@@ -43,12 +43,12 @@ export class OrderRequestPage implements OnInit {
   ngOnInit() {
     this.medCount = 0;
     this.myForm = this.fb.group({
-      email: new FormControl("", Validators.required),
+      user: new FormControl("", Validators.required),
       pharmacy: new FormControl("", Validators.required),
       prescriptionText: this.fb.array([]),
     });
     this.auth.user.subscribe((user) => {
-      this.myForm.patchValue({ email: user.email });
+      this.myForm.patchValue({ user: user.email });
     });
   }
 
@@ -58,8 +58,8 @@ export class OrderRequestPage implements OnInit {
   get pharmacy() {
     return this.myForm.get("pharmacy");
   }
-  get email() {
-    return this.myForm.get("email");
+  get user() {
+    return this.myForm.get("user");
   }
 
   addMedicine() {

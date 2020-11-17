@@ -12,11 +12,14 @@ import { from, Observable, throwError } from "rxjs";
 import { catchError, map, switchMap } from "rxjs/operators";
 
 import { Storage } from "@ionic/storage";
+import { Router } from "@angular/router";
+import { AuthService } from "./auth.service";
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
   constructor(
     private alertController: AlertController,
-    private storage: Storage
+    private storage: Storage,
+    private auth: AuthService
   ) {}
 
   intercept(
@@ -29,7 +32,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         if (token) {
           console.log("Token Found");
           request = request.clone({
-            headers: request.headers.set("Authorization", "Bearer " + token),
+            headers: request.headers.set("Authorization", "JWT " + token),
           });
         }
 
@@ -54,11 +57,14 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 ? error.error.email[0]
                 : error.error.non_field_errors
                 ? error.error.non_field_errors[0]
-                : error.status === 0
+                : error.error.detail
+                ? error.error.detail
+                : error.status == 0
                 ? "We have a server error, it will  be fixed soon.."
                 : "Unknown Error.. contact our developers";
 
             this.presentAlert(status, reason);
+            if (error.status == 401) this.auth.logout();
             return throwError(error);
           })
         );

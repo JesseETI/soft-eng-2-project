@@ -9,7 +9,7 @@ import { AlertController } from "@ionic/angular";
   styleUrls: ["./login.page.scss"],
 })
 export class LoginPage implements OnInit {
-  credentials = { email: "ram@ram.com", password: "123" };
+  credentials = { email: "u@u.com", password: "123" };
   constructor(
     private auth: AuthService,
     private alertCtrl: AlertController,
