@@ -6,6 +6,6 @@
   </ion-item>
   <ion-card-content>
     Ordered from: {{ order.pharmacy.name }}
-    <app-status></app-status>
+    <app-status [status]="order.status"></app-status>
   </ion-card-content>
 </ion-card>

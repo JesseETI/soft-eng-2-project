@@ -1,3 +1,10 @@
-<p>
-  status works!
-</p>
+<div
+  class="status-icon"
+  [ngClass]="{
+    'status-0': status == 0,
+    'status-1': status == 1,
+    'status-3': status == 3
+  }"
+>
+  <p>{{ statusText }}</p>
+</div>
