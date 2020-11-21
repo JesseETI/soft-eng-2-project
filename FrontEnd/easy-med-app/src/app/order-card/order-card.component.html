@@ -1,9 +1,10 @@
 <ion-card>
   <ion-item>
-    <ion-icon name="pin" slot="start"></ion-icon>
+    <ion-icon name="medical" slot="start"></ion-icon>
     <ion-label text-wrap>{{ medications.join(" , ") }}</ion-label>
     <ion-button fill="outline" slot="bottom">View</ion-button>
   </ion-item>
-
-  <ion-card-content> Ordered from: {{ order.pharmacy.name }} </ion-card-content>
+  <ion-card-content>
+    Ordered from: {{ order.pharmacy.name }} status: {{ order.status }}
+  </ion-card-content>
 </ion-card>

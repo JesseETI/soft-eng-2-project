@@ -99,9 +99,10 @@ export class OrdersService {
     formData.pharmacy = formData.pharmacy.id;
     formData.status = 0;
     formData.prescriptionText = JSON.stringify(formData.prescriptionText);
+    console.log(formData);
     this.http.post(this.ORDER_URL, formData).subscribe(
       (res) => {
-        this.router.navigateByUrl("/users");
+        this.route.navigateByUrl("/users");
         this.presentToast("Order successfully sent");
       },
       (error) => this.presentToast("Error sending order")
