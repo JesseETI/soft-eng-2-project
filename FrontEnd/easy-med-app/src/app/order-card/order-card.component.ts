@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { StatusComponent } from "./status/status.component";
 
 @Component({
   selector: "app-order-card",

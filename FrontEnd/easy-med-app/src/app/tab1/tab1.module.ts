@@ -7,6 +7,7 @@ import { ExploreContainerComponentModule } from "../explore-container/explore-co
 
 import { Tab1PageRoutingModule } from "./tab1-routing.module";
 import { OrderCardComponent } from ".././order-card/order-card.component";
+import { StatusComponent } from "../order-card/status/status.component";
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { OrderCardComponent } from ".././order-card/order-card.component";
     ExploreContainerComponentModule,
     Tab1PageRoutingModule,
   ],
-  declarations: [Tab1Page, OrderCardComponent],
+  declarations: [Tab1Page, OrderCardComponent, StatusComponent],
 })
 export class Tab1PageModule {}
