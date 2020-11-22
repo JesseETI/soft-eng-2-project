@@ -93,6 +93,7 @@ export class OrdersService {
     );
   }
   sendOrder(formData) {
+    //FIlter out empty medications
     formData.prescriptionText = formData.prescriptionText.filter(
       (res) => res.medName.length != 0
     );

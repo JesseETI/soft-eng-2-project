@@ -10,7 +10,7 @@ import { take, map, switchMap, catchError, filter } from "rxjs/operators";
 const helper = new JwtHelperService();
 const TOKEN_KEY = "jwt-token";
 //CHANGEME: Change urls below
-const LOGIN_URL = "http://localhost:8001/api/auth/login/";
+const LOGIN_URL = "http://localhost:8001/api/api-token-auth/";
 const REGISTER_URL = "http://localhost:8001/api/users/";
 
 @Injectable({
@@ -36,12 +36,18 @@ export class AuthService {
     platformObs.pipe(take(1)).subscribe((token) => {
       console.log("token storage: ", token);
       if (token) {
-        //TODO: implement auth check if token expires
-
-        let decoded = helper.decodeToken(token);
-        decoded["role"] = "USER"; //DELETEME: remove for final
-        console.log("decoded: ", decoded);
-        this.userData.next(decoded);
+        if (
+          helper.getTokenExpirationDate() &&
+          helper.getTokenExpirationDate(token).getTime() > new Date().getTime() // Test this
+        ) {
+          this.logout();
+        } else {
+          from(this.storage.get("role")).subscribe((role) => {
+            let decoded = helper.decodeToken(token);
+            decoded["role"] = role;
+            this.userData.next(decoded);
+          });
+        }
       } else {
         this.userData.next({ msg: "Not a user" });
       }
@@ -62,15 +68,17 @@ export class AuthService {
       // }),
 
       map((res: any) => {
-        if (res) return res.token; //TODO: change to get just the token from server response
+        if (res) return res; //TODO: change to get just the token from server response
         return null;
       }),
-      switchMap((token) => {
-        if (token == null) return of(null);
-        let decoded = helper.decodeToken(token);
-        decoded["role"] = "USER"; //DELETEME: remove for final
+      switchMap((res) => {
+        if (res.token == null) return of(null);
+        let decoded = helper.decodeToken(res.token);
+        decoded["role"] = res.user.role;
+        console.log(res.user.role);
         this.user = of(decoded);
-        let storageObs = from(this.storage.set(TOKEN_KEY, token));
+        let storageObs = from(this.storage.set(TOKEN_KEY, res.token));
+        this.storage.set("role", res.user.role);
         return storageObs;
       })
     );

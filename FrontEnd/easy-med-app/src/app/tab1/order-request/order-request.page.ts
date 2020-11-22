@@ -43,12 +43,12 @@ export class OrderRequestPage implements OnInit {
   ngOnInit() {
     this.medCount = 0;
     this.myForm = this.fb.group({
-      user: new FormControl(0, Validators.required),
+      user: new FormControl("", Validators.required),
       pharmacy: new FormControl("", Validators.required),
       prescriptionText: this.fb.array([]),
     });
     this.auth.user.subscribe((user) => {
-      this.myForm.patchValue({ user: user.user_id });
+      this.myForm.patchValue({ user: user.email });
     });
   }
 
