@@ -17,12 +17,11 @@ export class Tab1Page implements OnInit {
     private router: Router,
     private orderService: OrdersService,
     private auth: AuthService
-  ) {
-    this.getOrders(null);
-  }
+  ) {}
 
   ngOnInit() {
     this.auth.user.subscribe((user) => (this.role = user.role));
+    this.getOrders(null);
   }
 
   openForm() {
