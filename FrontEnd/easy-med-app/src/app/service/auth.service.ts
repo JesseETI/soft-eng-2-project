@@ -36,6 +36,8 @@ export class AuthService {
     platformObs.pipe(take(1)).subscribe((token) => {
       console.log("token storage: ", token);
       if (token) {
+        //TODO: implement auth check if token expires
+
         let decoded = helper.decodeToken(token);
         decoded["role"] = "USER"; //DELETEME: remove for final
         console.log("decoded: ", decoded);
