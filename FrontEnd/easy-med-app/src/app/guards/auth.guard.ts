@@ -1,6 +1,14 @@
 import { Injectable } from "@angular/core";
-import { CanActivate, ActivatedRouteSnapshot, Router } from "@angular/router";
-import { AlertController } from "@ionic/angular";
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  Router,
+  CanLoad,
+  Route,
+  UrlSegment,
+  UrlTree,
+} from "@angular/router";
+import { AlertController, NavController } from "@ionic/angular";
 import { Observable } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { AuthService } from "./../service/auth.service";
@@ -8,14 +16,14 @@ import { AuthService } from "./../service/auth.service";
 @Injectable({
   providedIn: "root",
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanLoad {
   constructor(
     private router: Router,
+    private navCtrl: NavController,
     private auth: AuthService,
     private alertCtrl: AlertController
   ) {}
-
-  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
     return this.auth.user.pipe(
       take(1),
       map((user) => {
@@ -39,9 +47,9 @@ export class AuthGuard implements CanActivate {
         } else if (user.role == route.data.role) {
           return true;
         } else if (user.role === "USER") {
-          this.router.navigateByUrl("/users");
+          this.navCtrl.navigateRoot("/users");
         } else if (user.role === "PHARM") {
-          this.router.navigateByUrl("/pharms");
+          this.navCtrl.navigateRoot("/pharms");
         }
       })
     );

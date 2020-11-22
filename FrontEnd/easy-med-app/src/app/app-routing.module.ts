@@ -8,14 +8,14 @@ const routes: Routes = [
     path: "users",
     loadChildren: () =>
       import("./users/tabs.module").then((m) => m.TabsPageModule),
-    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     data: { role: "USER" },
   },
   {
     path: "pharms",
     loadChildren: () =>
       import("./pharms/tabs.module").then((m) => m.TabsPage2Module),
-    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     data: { role: "PHARM" },
   },
   {
