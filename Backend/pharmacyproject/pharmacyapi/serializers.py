@@ -25,7 +25,7 @@ class PharmacySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pharmacy
-        fields = ('name', 'address', 'contact', 'pharmacist')
+        fields = ('id','name', 'address', 'contact', 'pharmacist')
 
     def create(self, validated_data):
         pharmacist_data = validated_data.pop('pharmacist')
