@@ -13,16 +13,16 @@ export class StatusComponent implements OnInit {
 
   ngOnInit() {
     switch (this.status) {
-      case "0": {
+      case 0: {
         this.statusText = "Pending";
         break;
       }
-      case "1": {
+      case 1: {
         this.statusText = "Ready";
         break;
       }
 
-      case "2": {
+      case 2: {
         this.statusText = "Cancelled";
         break;
       }
