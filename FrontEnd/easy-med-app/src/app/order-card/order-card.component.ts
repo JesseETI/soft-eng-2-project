@@ -8,6 +8,7 @@ import { StatusComponent } from "./status/status.component";
 })
 export class OrderCardComponent implements OnInit {
   @Input() order: any;
+  @Input() userRole: string;
   medications: string[] = [];
   constructor() {}
 

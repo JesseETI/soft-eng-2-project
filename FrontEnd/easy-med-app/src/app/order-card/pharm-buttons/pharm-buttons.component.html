@@ -1,0 +1,11 @@
+<ion-row class="ion-justify-content-center">
+  <ion-col *ngIf="status == 0">
+    <ion-button>Approve</ion-button>
+  </ion-col>
+  <ion-col *ngIf="status == 0">
+    <ion-button color="danger">Cancel</ion-button>
+  </ion-col>
+  <ion-col *ngIf="status == 1">
+    <ion-button color="warning">Collected</ion-button>
+  </ion-col>
+</ion-row>

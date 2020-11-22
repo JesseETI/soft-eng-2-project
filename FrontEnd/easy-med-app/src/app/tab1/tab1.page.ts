@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { AuthService } from "../service/auth.service";
 import { OrdersService } from "../service/orders.service";
 
 @Component({
@@ -7,12 +8,23 @@ import { OrdersService } from "../service/orders.service";
   templateUrl: "tab1.page.html",
   styleUrls: ["tab1.page.scss"],
 })
-export class Tab1Page {
-  constructor(private router: Router, private orderService: OrdersService) {
-    this.getOrders(null);
-  }
+export class Tab1Page implements OnInit {
   orders: any;
   numOrders = 0;
+  role: string;
+
+  constructor(
+    private router: Router,
+    private orderService: OrdersService,
+    private auth: AuthService
+  ) {
+    this.getOrders(null);
+  }
+
+  ngOnInit() {
+    this.auth.user.subscribe((user) => (this.role = user.role));
+  }
+
   openForm() {
     this.router.navigate(["/users/tab1/order"]);
   }
