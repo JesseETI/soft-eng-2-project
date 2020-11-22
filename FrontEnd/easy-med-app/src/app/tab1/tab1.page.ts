@@ -21,19 +21,21 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
     this.auth.user.subscribe((user) => (this.role = user.role));
-    this.getOrders(null);
+    this.getOrders();
   }
 
   openForm() {
     this.router.navigate(["/users/tab1/order"]);
   }
 
-  getOrders(loadEvent) {
+  getOrders(loadEvent = null) {
     this.orderService.getOrders().subscribe((res) => {
       console.log("Loaded orders");
+      console.log(res);
       this.orders = res;
+      if (this.orders) this.numOrders = this.orders.length;
     });
-    if (this.orders) this.numOrders = this.orders.length;
+
     if (loadEvent) loadEvent.target.complete();
   }
 }
