@@ -57,15 +57,6 @@ export class AuthService {
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(LOGIN_URL, credentials).pipe(
       take(1),
-      // catchError((err) => {
-      //   if (err.status === 0) {
-      //     err.message =
-      //       "Something wrong with our servers.. please wait for an update";
-      //     err.name = "Server Error";
-      //     this.presentAlert(err.name, err.message);
-      //   }
-      //   return of(false);
-      // }),
 
       map((res: any) => {
         if (res) return res; //TODO: change to get just the token from server response
