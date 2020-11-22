@@ -6,6 +6,13 @@
   </ion-item>
   <ion-card-content>
     Ordered from: {{ order.pharmacy.name }}
-    <app-status [status]="order.status"></app-status>
+    <div class="ion-align-items-center">
+      <app-status [status]="order.status"></app-status>
+      <!-- DELETEME: Change below to PHARM -->
+      <app-pharm-buttons
+        *ngIf="userRole === 'PHARM'"
+        [status]="order.status"
+      ></app-pharm-buttons>
+    </div>
   </ion-card-content>
 </ion-card>
