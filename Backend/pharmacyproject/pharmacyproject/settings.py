@@ -98,6 +98,15 @@ REST_FRAMEWORK = {
     ),
 }
 
+JWT_AUTH = {
+
+    'JWT_VERIFY_EXPIRATION': False,
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+    'pharmacyapi.utils.jwt_response_payload_handler',
+
+}
+
+
 REST_USE_JWT = True
 
 AUTH_USER_MODEL = "pharmacyapi.User"
@@ -145,5 +154,5 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:8100", #your url here
+    "http://localhost:8100", #Ramith url here
 ]

@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import User, PrescriptonOrder, Pharmacy
 
-
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -19,9 +18,11 @@ class PrescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrescriptonOrder
         fields = '__all__'
+    
 
 class PharmacySerializer(serializers.ModelSerializer):
+    pharmacist = UserSerializer()
 
     class Meta:
         model = Pharmacy
-        fields = '__all__'
+        fields = ('name', 'address', 'contact', 'pharmacist')

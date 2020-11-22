@@ -1,9 +1,9 @@
+from django.db.models.fields import EmailField
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import User, PrescriptonOrder, Pharmacy
 from .serializers import UserSerializer, PrescriptionSerializer, PharmacySerializer
-
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -27,11 +27,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         user = request.user
 
         try:
-            if user.role == "USER":
-                orders_queryset = PrescriptonOrder.objects.filter(user = user.id)
-            elif user.role == "PHARM":
-                pharmacy = Pharmacy.objects.get(pharmacist = user.id)
-                orders_queryset = PrescriptonOrder.objects.filter(pharmacy=pharmacy.id)
+            orders_queryset = PrescriptonOrder.objects.filter(user = user)
 
             serializer = PrescriptionSerializer(orders_queryset, many=True)
 
