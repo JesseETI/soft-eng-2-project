@@ -66,7 +66,7 @@ export class AuthService {
         if (res.token == null) return of(null);
         let decoded = helper.decodeToken(res.token);
         decoded["role"] = res.user.role;
-        console.log(res.user.role);
+
         this.user = of(decoded);
         let storageObs = from(this.storage.set(TOKEN_KEY, res.token));
         this.storage.set("role", res.user.role);
@@ -106,6 +106,7 @@ export class AuthService {
     this.storage.remove(TOKEN_KEY).then(() => {
       this.router.navigateByUrl("/");
       this.userData.next({ msg: "Not a user" });
+      this.storage.remove("role");
     });
   }
 

@@ -11,7 +11,8 @@ import { AuthService } from "./auth.service";
 })
 export class OrdersService {
   private PHARMACY_URL = "http://localhost:8001/api/pharmacy/";
-  private ORDER_URL = "http://localhost:8001/api/orders/";
+  private ORDER_URL = "http://localhost:8001/api/orders/getmyorders/";
+  private POST_ORDER = "http://localhost:8001/api/orders/";
   constructor(
     private auth: AuthService,
     private http: HttpClient,
@@ -37,11 +38,11 @@ export class OrdersService {
     formData.prescriptionText = formData.prescriptionText.filter(
       (res) => res.medName.length != 0
     );
-    formData.pharmacy = formData.pharmacy.id;
+    formData.pharmacy_id = formData.pharmacy.id;
     formData.status = 0;
     formData.prescriptionText = JSON.stringify(formData.prescriptionText);
     console.log(formData);
-    this.http.post(this.ORDER_URL, formData).subscribe(
+    this.http.post(this.POST_ORDER, formData).subscribe(
       (res) => {
         this.route.navigateByUrl("/users");
         this.presentToast("Order successfully sent");
