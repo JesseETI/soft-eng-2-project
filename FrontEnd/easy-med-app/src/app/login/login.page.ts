@@ -1,7 +1,7 @@
 import { AuthService } from "./../service/auth.service";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AlertController } from "@ionic/angular";
+import { AlertController, NavController } from "@ionic/angular";
 
 @Component({
   selector: "app-login",
@@ -13,7 +13,8 @@ export class LoginPage implements OnInit {
   constructor(
     private auth: AuthService,
     private alertCtrl: AlertController,
-    private router: Router
+
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {}
@@ -21,8 +22,7 @@ export class LoginPage implements OnInit {
   login() {
     this.auth.login(this.credentials).subscribe(async (res) => {
       if (res) {
-        console.log(res);
-        this.router.navigateByUrl("/users");
+        this.navCtrl.navigateRoot("/users");
       } else {
         //TODO: if login fails
       }

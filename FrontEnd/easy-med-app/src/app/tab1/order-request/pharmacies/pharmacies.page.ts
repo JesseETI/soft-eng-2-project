@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
+import { NavController } from "@ionic/angular";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { OrdersService } from "src/app/service/orders.service";
@@ -12,7 +13,11 @@ import { OrdersService } from "src/app/service/orders.service";
 export class PharmaciesPage implements OnInit {
   pharmacies: any;
 
-  constructor(private orders: OrdersService, private router: Router) {
+  constructor(
+    private orders: OrdersService,
+    private router: Router,
+    private navCtrl: NavController
+  ) {
     this.orders.getPharms().subscribe(
       (m) => {
         console.log(m);
@@ -20,7 +25,7 @@ export class PharmaciesPage implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.router.navigateByUrl("/users");
+        this.navCtrl.navigateRoot("/users");
       }
     );
   }
