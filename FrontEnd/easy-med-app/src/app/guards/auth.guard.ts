@@ -27,8 +27,6 @@ export class AuthGuard implements CanLoad {
     return this.auth.user.pipe(
       take(1),
       map((user) => {
-        console.log(user);
-        //FIXME: if (!user || user.role !== route.data.role) change below to select by user
         if (
           !user ||
           user.msg === "Not a user"

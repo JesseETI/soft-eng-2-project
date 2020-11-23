@@ -62,15 +62,15 @@ export class AuthService {
         if (res) return res; //TODO: change to get just the token from server response
         return null;
       }),
-      switchMap((res) => {
+      map((res) => {
         if (res.token == null) return of(null);
         let decoded = helper.decodeToken(res.token);
         decoded["role"] = res.user.role;
 
         this.user = of(decoded);
-        let storageObs = from(this.storage.set(TOKEN_KEY, res.token));
+        from(this.storage.set(TOKEN_KEY, res.token));
         this.storage.set("role", res.user.role);
-        return storageObs;
+        return res;
       })
     );
   }

@@ -10,21 +10,16 @@ import { AlertController, NavController } from "@ionic/angular";
 })
 export class LoginPage implements OnInit {
   credentials = { email: "u@u.com", password: "123" };
-  constructor(
-    private auth: AuthService,
-    private alertCtrl: AlertController,
-
-    private navCtrl: NavController
-  ) {}
+  constructor(private auth: AuthService, private navCtrl: NavController) {}
 
   ngOnInit() {}
   // TODO: Add validation
   login() {
-    this.auth.login(this.credentials).subscribe(async (res) => {
-      if (res) {
+    this.auth.login(this.credentials).subscribe((res) => {
+      if (res && res.user.role === "USER") {
         this.navCtrl.navigateRoot("/users");
-      } else {
-        //TODO: if login fails
+      } else if (res && res.user.role == "PHARM") {
+        this.navCtrl.navigateRoot("/pharms");
       }
     });
   }
