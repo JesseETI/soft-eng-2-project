@@ -26,8 +26,11 @@ class OrderViewSet(viewsets.ModelViewSet):
     def getmyorders(self, request, pk=None):
         user = request.user
         try:
-            pharmacy = Pharmacy.objects.filter(pharmacist = user)
-            order_queryset = PrescriptonOrder.objects.filter(pharmacy__in = pharmacy)
+            if (user.role == "PHARM"):
+                pharmacy = Pharmacy.objects.filter(pharmacist = user)
+                order_queryset = PrescriptonOrder.objects.filter(pharmacy__in = pharmacy)
+            elif (user.role == "USER"):
+                order_queryset = PrescriptonOrder.objects.filter(user = user.id)
             serializer = PrescriptionSerializer(order_queryset, many = True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
