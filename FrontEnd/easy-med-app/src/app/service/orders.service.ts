@@ -11,7 +11,7 @@ import { AuthService } from "./auth.service";
 })
 export class OrdersService {
   private PHARMACY_URL = "http://localhost:8001/api/pharmacy/";
-  private ORDER_URL = "http://localhost:8001/api/orders/getmyorders/";
+  private ORDER_URL = "http://localhost:8001/api/orders/";
   constructor(
     private auth: AuthService,
     private http: HttpClient,

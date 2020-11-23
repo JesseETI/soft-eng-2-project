@@ -21,7 +21,10 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
     this.auth.user.subscribe((user) => (this.role = user.role));
-    this.getOrders();
+  }
+
+  ionViewWillEnter() {
+    this.getOrders(null);
   }
 
   openForm() {
