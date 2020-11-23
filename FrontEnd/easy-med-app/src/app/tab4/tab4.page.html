@@ -5,9 +5,25 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="getOrders($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Customer Orders</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <app-explore-container
+    *ngIf="numOrders === 0"
+    message="You have no orders yet..., click the add button below to make you order"
+    icon="sad-outline"
+  ></app-explore-container>
+  <app-order-card
+    *ngFor="let order of orders"
+    [order]="order"
+    [userRole]="role"
+  >
+  </app-order-card>
 </ion-content>

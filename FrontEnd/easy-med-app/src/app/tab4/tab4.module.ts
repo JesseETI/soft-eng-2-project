@@ -8,12 +8,15 @@ import { ExploreContainerComponentModule } from "../explore-container/explore-co
 
 import { Tab4PageRoutingModule } from "./tab4-routing.module";
 
+import { OrderCardComponentModule } from "../order-card/order-card.module";
+
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
+    OrderCardComponentModule,
     RouterModule.forChild([{ path: "", component: Tab4Page }]),
     Tab4PageRoutingModule,
   ],

@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 import { AuthService } from "../service/auth.service";
+import { OrdersService } from "../service/orders.service";
 
 @Component({
   selector: "app-tab4",
@@ -7,9 +9,32 @@ import { AuthService } from "../service/auth.service";
   styleUrls: ["tab4.page.scss"],
 })
 export class Tab4Page {
-  constructor(private auth: AuthService) {}
+  orders: any;
+  numOrders = 0;
+  role: string;
 
-  logout() {
-    this.auth.logout();
+  constructor(
+    private router: Router,
+    private orderService: OrdersService,
+    private auth: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.auth.user.subscribe((user) => (this.role = user.role));
+  }
+
+  ionViewWillEnter() {
+    this.getOrders(null);
+  }
+
+  getOrders(loadEvent = null) {
+    this.orderService.getOrders().subscribe((res) => {
+      console.log("Loaded orders");
+      console.log(res);
+      this.orders = res;
+      if (this.orders) this.numOrders = this.orders.length;
+    });
+
+    if (loadEvent) loadEvent.target.complete();
   }
 }

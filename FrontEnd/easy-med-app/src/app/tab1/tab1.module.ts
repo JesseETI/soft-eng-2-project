@@ -9,6 +9,7 @@ import { Tab1PageRoutingModule } from "./tab1-routing.module";
 import { OrderCardComponent } from ".././order-card/order-card.component";
 import { StatusComponent } from "../order-card/status/status.component";
 import { PharmButtonsComponent } from "../order-card/pharm-buttons/pharm-buttons.component";
+import { OrderCardComponentModule } from "../order-card/order-card.module";
 
 @NgModule({
   imports: [
@@ -16,13 +17,9 @@ import { PharmButtonsComponent } from "../order-card/pharm-buttons/pharm-buttons
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
+    OrderCardComponentModule,
     Tab1PageRoutingModule,
   ],
-  declarations: [
-    Tab1Page,
-    OrderCardComponent,
-    StatusComponent,
-    PharmButtonsComponent,
-  ],
+  declarations: [Tab1Page],
 })
 export class Tab1PageModule {}

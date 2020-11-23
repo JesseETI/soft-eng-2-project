@@ -21,7 +21,6 @@ export class StatusComponent implements OnInit {
         this.statusText = "Ready";
         break;
       }
-
       case 2: {
         this.statusText = "Cancelled";
         break;
