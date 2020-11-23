@@ -11,6 +11,7 @@
       <app-pharm-buttons
         *ngIf="userRole === 'PHARM'"
         [status]="order.status"
+        [orderId]="order.id"
       ></app-pharm-buttons>
     </div>
   </ion-card-content>

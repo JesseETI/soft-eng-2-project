@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "../service/auth.service";
 import { OrdersService } from "../service/orders.service";
+import { PharmServicesService } from "../service/pharm-services.service";
 
 @Component({
   selector: "app-tab4",
@@ -13,11 +14,7 @@ export class Tab4Page {
   numOrders = 0;
   role: string;
 
-  constructor(
-    private router: Router,
-    private orderService: OrdersService,
-    private auth: AuthService
-  ) {}
+  constructor(private orderService: OrdersService, private auth: AuthService) {}
 
   ngOnInit() {
     this.auth.user.subscribe((user) => (this.role = user.role));
@@ -34,7 +31,6 @@ export class Tab4Page {
       this.orders = res;
       if (this.orders) this.numOrders = this.orders.length;
     });
-
     if (loadEvent) loadEvent.target.complete();
   }
 }
