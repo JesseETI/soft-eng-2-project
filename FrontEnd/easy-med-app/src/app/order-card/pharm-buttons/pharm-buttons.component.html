@@ -1,15 +1,21 @@
+<!-- TODO: Fix the logic in decisions -->
 <ion-row class="ion-justify-content-center">
-  <ion-col *ngIf="status == 0">
+  <ion-col *ngIf="status == 0 || status == 2 || status == 3">
     <ion-button (click)="updateOrderStatus(1)">Approve</ion-button>
   </ion-col>
-  <ion-col *ngIf="status == 0">
-    <ion-button (click)="updateOrderStatus(3)" color="danger"
+  <ion-col *ngIf="status == 0 || status == 3">
+    <ion-button (click)="updateOrderStatus(2)" color="danger"
       >Cancel</ion-button
     >
   </ion-col>
-  <ion-col *ngIf="status == 1">
-    <ion-button (click)="updateOrderStatus(4)" color="warning"
+  <ion-col *ngIf="status == 1 || status == 3">
+    <ion-button (click)="updateOrderStatus(3)" color="warning"
       >Collected</ion-button
+    >
+  </ion-col>
+  <ion-col *ngIf="status != 0">
+    <ion-button (click)="updateOrderStatus(0)" color="danger"
+      >Pending</ion-button
     >
   </ion-col>
 </ion-row>
