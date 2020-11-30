@@ -34,8 +34,8 @@ export class Tab1Page implements OnInit {
   getOrders(loadEvent = null) {
     this.orderService.getOrders().subscribe((res) => {
       console.log("Loaded orders");
-      console.log(res);
-      this.orders = res;
+
+      this.orders = res.filter((order) => order.status != 3);
       if (this.orders) this.numOrders = this.orders.length;
     });
 

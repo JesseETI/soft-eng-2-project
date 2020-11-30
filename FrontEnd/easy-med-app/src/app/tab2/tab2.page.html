@@ -1,11 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      History
-    </ion-title>
+    <ion-title> History </ion-title>
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
@@ -13,5 +10,32 @@
       <ion-title size="large">History</ion-title>
     </ion-toolbar>
   </ion-header>
-  
-</ion-content>i
+
+  <ion-refresher slot="fixed" (ionRefresh)="getOrders($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Your Orders</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <app-explore-container
+    *ngIf="numOrders === 0"
+    message="You have no orders yet..., click the add button below to make you order"
+    icon="sad-outline"
+  ></app-explore-container>
+  <app-order-card
+    *ngFor="let order of orders"
+    [order]="order"
+    [userRole]="role"
+  >
+  </app-order-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openForm()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

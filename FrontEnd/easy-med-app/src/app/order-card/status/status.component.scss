@@ -1,7 +1,9 @@
 .status-icon {
   width: 30%;
+  height: 30px;
   border-radius: 10px;
   text-align: center;
+  padding: 5px 0;
 }
 
 .status-0 {
@@ -9,9 +11,10 @@
   color: white;
 }
 .status-1 {
-  background-color: rgb(51, 255, 0);
-  color: black;
+  background-color: rgb(39, 138, 0);
+  color: white;
 }
 .status-2 {
   background-color: rgb(60, 0, 255);
+  color: white;
 }
